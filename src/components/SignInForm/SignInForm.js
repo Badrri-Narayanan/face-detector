@@ -42,7 +42,7 @@ class SignInForm extends Component {
 		const {detectRouteChange} = this.props;
 		return(
 			<div >
-				<article className="pa2 dib white shadow-5 center">
+				<article className="pa2 dib white center">
 				  <div className="measure">
 					<fieldset id="sign_up" className="ba b--transparent ph0 mh0">
 					  <legend className="f1 fw6 ph0 mh0">Sign In</legend>
