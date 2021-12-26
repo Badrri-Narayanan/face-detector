@@ -1,7 +1,7 @@
 import './styles.css';
 
 const Spinner = () => (
-    <div class="center-screen lds-roller">
+    <div className="center-screen lds-roller">
         <div></div>
         <div></div>
         <div></div>

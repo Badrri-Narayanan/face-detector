@@ -11,8 +11,8 @@ const FaceDetector = ({imageUrl, boxes}) => {
 				width='500px' height='auto'
 			/>
 			{
-				boxes.map(box => (
-					<div className='bounding-box' style={{left: box.leftCol, right: box.rightCol, top: box.topRow, bottom: box.bottomRow}} ></div>
+				boxes.map((box, idx) => (
+					<div key={idx} className='bounding-box' style={{left: box.leftCol, right: box.rightCol, top: box.topRow, bottom: box.bottomRow}} ></div>
 				))
 			}
 		</div>
