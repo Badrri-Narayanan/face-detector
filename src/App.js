@@ -10,6 +10,7 @@ import FaceDetector from './components/FaceDetector/FaceDetector';
 import SignInForm from './components/SignInForm/SignInForm';
 import Register from './components/Register/Register';
 import { paramOptions } from './utils';
+import Spinner from './components/Spinner';
 
 const initialState = {
 			input: '',
@@ -17,6 +18,7 @@ const initialState = {
 			boxes: [],
 			route: 'signIn',
 			isSignedIn: false,
+			isLoading: false,
 			user: {
 				id: '',
 				name: '',
@@ -101,9 +103,13 @@ class App extends Component {
 			this.displayBox(this.calculateFaceLocation(response))})
 			.catch(err => console.log(err));
 	}
+
+	setIsLoading = (loadingState) => {
+		this.setState({isLoading : loadingState})
+	}
 	
 	render() {
-		const {isSignedIn, boxes, route, imageURL, user} = this.state;
+		const {isSignedIn, boxes, route, isLoading, imageURL, user} = this.state;
 	  return (
 		<div className="App">
 			<Particles className='particles' params={paramOptions} />
@@ -120,7 +126,13 @@ class App extends Component {
 					<FaceDetector boxes={boxes} imageUrl={imageURL} />
 				</div> 
 				:	(route === 'signIn'
-						?<SignInForm loadUser={this.loadUser} detectRouteChange={this.onRouteChange} />
+						? !isLoading 
+							? <SignInForm 
+									loadUser={this.loadUser} 
+									setIsLoading={this.setIsLoading} 
+									detectRouteChange={this.onRouteChange} 
+								/> 
+							: <Spinner /> 
 						:<Register loadUser={this.loadUser} detectRouteChange={this.onRouteChange} />
 					)	
 			}

@@ -19,6 +19,8 @@ class SignInForm extends Component {
 	}
 	
 	onSubmitSignin = () => {
+		const { setIsLoading, loadUser, detectRouteChange } = this.props;
+		setIsLoading(true);
 		fetch('https://guarded-garden-90311.herokuapp.com/signin', {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
@@ -29,13 +31,20 @@ class SignInForm extends Component {
 		}).then(response => response.json())
 		.then(user =>{
 			if(user.id) {
-				this.props.loadUser(user);
-				this.props.detectRouteChange('home')
+				loadUser(user);
+				detectRouteChange('home')
 			} else {
 				alert("Invalid Email/Password");
 			}
+			setIsLoading(false);
 		})
 		
+	}
+
+	submitForm = (event) => {
+		if(event.code === "Enter") {
+			this.onSubmitSignin();
+		}
 	}
 	
 	render() {
@@ -64,6 +73,7 @@ class SignInForm extends Component {
 							type="password" 
 							name="password"  
 							id="password"
+							onKeyDown={this.submitForm}
 						/>
 					  </div>
 					</fieldset>
