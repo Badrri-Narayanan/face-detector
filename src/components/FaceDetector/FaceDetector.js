@@ -1,7 +1,7 @@
 import React from 'react';
 import './FaceDetector.css';
 
-const FaceDetector = ({imageUrl, box}) => {
+const FaceDetector = ({imageUrl, boxes}) => {
 	return(
 	<div className='center ma'>
 		<div className='absolute mt2'>
@@ -10,7 +10,11 @@ const FaceDetector = ({imageUrl, box}) => {
 				alt='Enter URL above'
 				width='500px' height='auto'
 			/>
-			<div className='bounding-box' style={{left: box.leftCol, right: box.rightCol, top: box.topRow, bottom: box.bottomRow}} ></div>
+			{
+				boxes.map(box => (
+					<div className='bounding-box' style={{left: box.leftCol, right: box.rightCol, top: box.topRow, bottom: box.bottomRow}} ></div>
+				))
+			}
 		</div>
 	</div>
 	);

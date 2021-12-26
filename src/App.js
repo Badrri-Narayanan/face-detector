@@ -9,89 +9,12 @@ import Rank from './components/Rank/Rank';
 import FaceDetector from './components/FaceDetector/FaceDetector';
 import SignInForm from './components/SignInForm/SignInForm';
 import Register from './components/Register/Register';
-
-const paramOptions = {
-	background: {
-	  color: {
-		value: "#0d47a1",
-	  },
-	},
-	fpsLimit: 60,
-	interactivity: {
-	  events: {
-		onClick: {
-		  enable: true,
-		  mode: "push",
-		},
-		onHover: {
-		  enable: true,
-		  mode: "repulse",
-		},
-		resize: true,
-	  },
-	  modes: {
-		bubble: {
-		  distance: 400,
-		  duration: 2,
-		  opacity: 0.8,
-		  size: 40,
-		},
-		push: {
-		  quantity: 4,
-		},
-		repulse: {
-		  distance: 200,
-		  duration: 0.4,
-		},
-	  },
-	},
-	particles: {
-	  color: {
-		value: "#ffffff",
-	  },
-	  links: {
-		color: "#ffffff",
-		distance: 150,
-		enable: true,
-		opacity: 0.5,
-		width: 1,
-	  },
-	  collisions: {
-		enable: true,
-	  },
-	  move: {
-		direction: "none",
-		enable: true,
-		outMode: "bounce",
-		random: false,
-		speed: 2,
-		straight: false,
-	  },
-	  number: {
-		density: {
-		  enable: true,
-		  value_area: 800,
-		},
-		value: 80,
-	  },
-	  opacity: {
-		value: 0.5,
-	  },
-	  shape: {
-		type: "circle",
-	  },
-	  size: {
-		random: true,
-		value: 5,
-	  },
-	},
-	detectRetina: true,
-  }
+import { paramOptions } from './utils';
 
 const initialState = {
 			input: '',
 			imageURL: '',
-			box: {},
+			boxes: [],
 			route: 'signIn',
 			isSignedIn: false,
 			user: {
@@ -120,16 +43,21 @@ class App extends Component {
 	}
 	
 	calculateFaceLocation = (data) => {
-		const Face = data.outputs[0].data.regions[0].region_info.bounding_box;
+		const faceRegions = data.outputs[0].data.regions;
 		const image = document.getElementById('inputimage');
 		const width = Number(image.width);
 		const height = Number(image.height);
-		return {
-			leftCol: Face.left_col * width,
-			topRow: Face.top_row * height,
-			rightCol: width - (Face.right_col * width),
-			bottomRow: height - (Face.bottom_row * height),
-		}
+		let faces = [];
+		faceRegions.forEach(face => {
+			let faceArea = face.region_info.bounding_box;
+			faces.push({
+				leftCol: faceArea.left_col * width,
+				topRow: faceArea.top_row * height,
+				rightCol: width - (faceArea.right_col * width),
+				bottomRow: height - (faceArea.bottom_row * height),
+			})
+		})
+		return faces;
 	}
 	
 	onRouteChange = (route) => {
@@ -141,8 +69,8 @@ class App extends Component {
 		this.setState({ route: route });
 	}
 	
-	displayBox = (box) => {
-		this.setState({box: box});
+	displayBox = (boxes) => {
+		this.setState({boxes: boxes});
 	}
 	
 	onInputChange = (event) => {
@@ -175,7 +103,7 @@ class App extends Component {
 	}
 	
 	render() {
-		const {isSignedIn, box, route, imageURL, user} = this.state;
+		const {isSignedIn, boxes, route, imageURL, user} = this.state;
 	  return (
 		<div className="App">
 			<Particles className='particles' params={paramOptions} />
@@ -189,7 +117,7 @@ class App extends Component {
 						onInputChange={this.onInputChange} 
 						onPictureClick={this.onPictureClick}
 					/>
-					<FaceDetector box={box} imageUrl={imageURL} />
+					<FaceDetector boxes={boxes} imageUrl={imageURL} />
 				</div> 
 				:	(route === 'signIn'
 						?<SignInForm loadUser={this.loadUser} detectRouteChange={this.onRouteChange} />
