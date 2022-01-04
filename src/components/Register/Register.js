@@ -19,8 +19,7 @@ class Register extends Component {
 		this.setState({name: event.target.value});
 	}
 	onSubmitRegister = () => {
-		fetch('http://localhost:3004/register', {
-		//fetch('https://guarded-garden-90311.herokuapp.com/register', {
+		fetch('https://guarded-garden-90311.herokuapp.com/register', {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({

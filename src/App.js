@@ -42,7 +42,7 @@ class App extends Component {
 	componentDidMount() {
 		const token = window.sessionStorage.getItem('token');
 		if(token) {
-			fetch('http://localhost:3004/signin', {
+			fetch('https://guarded-garden-90311.herokuapp.com/signin', {
 				method: 'POST',
 				headers: {
 					'Content-Type' : 'application/json',
@@ -58,7 +58,7 @@ class App extends Component {
 	}
 
 	loadProfile = (id, token) => {
-		fetch(`http://localhost:3004/profile/${id}`, {
+		fetch(`https://guarded-garden-90311.herokuapp.com/profile/${id}`, {
 			method: 'get',
 			headers: {
 				'Content-Type' : 'application/json',
@@ -128,8 +128,7 @@ class App extends Component {
 	
 	onPictureClick = () => {
 		this.setState({imageURL: this.state.input});
-		fetch('http://localhost:3004/imageurl', {
-		//fetch('https://guarded-garden-90311.herokuapp.com/imageurl', {
+		fetch('https://guarded-garden-90311.herokuapp.com/imageurl', {
 						method: 'post',
 						headers: {
 							'Content-Type': 'application/json',
@@ -142,8 +141,7 @@ class App extends Component {
 			.then(response => response.json())
 			.then( (response) => {
 				if(response) {
-					fetch('http://localhost:3004/image', {
-					//fetch('https://guarded-garden-90311.herokuapp.com/image', {
+					fetch('https://guarded-garden-90311.herokuapp.com/image', {
 						method: 'put',
 						headers: {
 							'Content-Type': 'application/json',

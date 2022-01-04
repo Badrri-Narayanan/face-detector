@@ -24,8 +24,7 @@ class SignInForm extends Component {
 	onSubmitSignin = () => {
 		const { setIsLoading, loadProfile } = this.props;
 		setIsLoading(true);
-		fetch('http://localhost:3004/signin', {
-		//fetch('https://guarded-garden-90311.herokuapp.com/signin', {
+		fetch('https://guarded-garden-90311.herokuapp.com/signin', {
 			method: 'post',
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({
