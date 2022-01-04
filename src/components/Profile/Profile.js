@@ -21,8 +21,8 @@ const Profile = ({ isProfileOpen, toggleModal, user, updateUserInfo }) => {
 
     const saveProfileInfo = (event) => {
         event.preventDefault();
-        fetch(`https://guarded-garden-90311.herokuapp.com/${user.id}`, {
-            method: 'post',
+        fetch(`https://guarded-garden-90311.herokuapp.com/profile/${user.id}`, {
+            method: 'put',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization' : window.sessionStorage.getItem('token')
