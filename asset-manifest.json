@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/face-detector/static/css/main.a2b8c7cb.css",
-    "main.js": "/face-detector/static/js/main.685b958a.js",
+    "main.js": "/face-detector/static/js/main.c15c6493.js",
     "index.html": "/face-detector/index.html",
     "main.a2b8c7cb.css.map": "/face-detector/static/css/main.a2b8c7cb.css.map",
-    "main.685b958a.js.map": "/face-detector/static/js/main.685b958a.js.map"
+    "main.c15c6493.js.map": "/face-detector/static/js/main.c15c6493.js.map"
   },
   "entrypoints": [
     "static/css/main.a2b8c7cb.css",
-    "static/js/main.685b958a.js"
+    "static/js/main.c15c6493.js"
   ]
 }
