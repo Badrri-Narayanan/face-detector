@@ -50,27 +50,12 @@ class App extends Component {
 				}
 			}).then(resp => resp.json())
 				.then(data => {
-					if(data && data.id) {
-						this.loadProfile(data.id, token);
+					if(data && data.userInfo) {
+						this.updateUserDetails(data.userInfo);
+						this.onRouteChange('home');
 					}
 				}).catch(console.log)
 		}
-	}
-
-	loadProfile = (id, token) => {
-		fetch(`https://guarded-garden-90311.herokuapp.com/profile/${id}`, {
-			method: 'get',
-			headers: {
-				'Content-Type' : 'application/json',
-				'Authorization' : token
-			}
-		}).then(resp => resp.json())
-		.then(user => {
-			if(user && user.email) {
-				this.updateUserDetails(user);
-				this.onRouteChange('home');
-			}
-		})
 	}
 	
 	updateUserDetails = (userInfo) => {
@@ -196,8 +181,9 @@ class App extends Component {
 				:	(route === 'signIn'
 						? !isLoading 
 							? <SignInForm 
-									setIsLoading={this.setIsLoading} 
-									loadProfile={this.loadProfile}
+									setIsLoading={this.setIsLoading}
+									detectRouteChange={this.onRouteChange}
+									updateUserDetails={this.updateUserDetails}
 								/> 
 							: <Spinner /> 
 						:<Register updateUserDetails={this.updateUserDetails} detectRouteChange={this.onRouteChange} />

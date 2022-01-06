@@ -22,7 +22,7 @@ class SignInForm extends Component {
 	}
 	
 	onSubmitSignin = () => {
-		const { setIsLoading, loadProfile } = this.props;
+		const { setIsLoading, detectRouteChange, updateUserDetails } = this.props;
 		setIsLoading(true);
 		fetch('https://guarded-garden-90311.herokuapp.com/signin', {
 			method: 'post',
@@ -33,9 +33,10 @@ class SignInForm extends Component {
 			})
 		}).then(response => response.json())
 		.then(data =>{
-			if(data.userId && data.success === 'true') {
+			if(data.userId && data.success === 'true' && data.userInfo) {
 				this.saveAuthTokenInSession(data.token)
-				loadProfile(data.userId, data.token);
+				updateUserDetails(data.userInfo);
+				detectRouteChange('home');
 			} else {
 				alert("Invalid Email/Password");
 			}
